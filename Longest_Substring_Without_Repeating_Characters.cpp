@@ -1,5 +1,5 @@
 // Copyright 2020 AmberBhardwaj
-// Licensed under GPLv2 or any later version
+// Licensed under MIT License or any later version
 
 class Solution {
 public:
