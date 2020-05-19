@@ -1,6 +1,3 @@
-
-
-
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -99,3 +96,17 @@ public:
     }
          
 };
+
+/*
+We are going to discuss the time complexity and the space complexity as usual.
+
+For the implementation above, similar to the recursion solution of the search operation, 
+the time complexity is O(h) in the worst case. And according to the depth of recursion, 
+the space complexity is also O(h) in the worst case.
+
+We can also represent the complexity using the total number of nodes N. The time complexity 
+and space complexity will be O(logN) in the best case but O(N) in the worse case.
+
+If you can try to implement the strategy iteratively, you will reduce the space complexity to O(1).
+
+*/
