@@ -1,4 +1,5 @@
 //Given a set of distinct integers, S, return all possible subsets.
+// https://www.educative.io/courses/grokking-the-coding-interview/gx2OqlvEnWG
 
 vector<vector<int> > Solution::subsets(vector<int> &A) {
     vector<vector<int> > subsets;
