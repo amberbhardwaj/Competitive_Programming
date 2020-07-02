@@ -53,33 +53,28 @@ public:
         // If there is an empty list
         if (head == nullptr) return nullptr;
         
-        // If there are only two elements in Linked list
-        if (2 == getLength(head))
-        {
-            return head;
-        }
-        else
         {
             // When more than 2 elements are present 
             
             ListNode* odd = head;
             ListNode* even = head->next;
-            ListNode* temp = even;
+            // To hold the pointer of even list so that 
+            // we can combine it with odd list at the end
+            ListNode* temp = even; 
             
             // 1 2   [3]   4 5 nullptr
             // odd - 1,3,5
             // even- 2,4 
             while ((even != nullptr) && (even->next != nullptr))
             {
+                //follow example 1 to understand better 
                 odd->next = even->next;
                 odd = odd->next;
                 even->next = odd->next;
                 even = even->next;
             }
+            //Assigning even head at the end of odd list
             odd->next = temp;
-            print (head);
-            
-            cout << "\n";
             
             return head;
         }
