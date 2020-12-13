@@ -1,0 +1,4 @@
+C++ Design Patterns in easy language
+------------------------------------
+
+https://refactoring.guru/design-patterns/strategy/cpp/example
