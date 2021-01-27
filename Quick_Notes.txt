@@ -1,0 +1,98 @@
+---------------------------
+COMMON-API
+---------------------------
+
+What is CommonAPI C++?
+
+CommonAPI C++ is a C++ framework for interprocess and network communication. The basic objective is not to provide a new mechanism for interprocess or 
+network communication (IPC), but to define a high-level C ++ API, which can be used for different mechanisms. The benefit for C ++ developers should be 
+that they are relieved from details of proprietary or little-known communication frameworks or protocols.
+
+What are the basic features of CommonAPI C++?
+
+* Interface description with the easy to learn, human-readable FrancaIDL.
+* Support of Franca features as inheritance, polymorphic structs, unions. 
+* Code generation for clear and not too complex C++ code.
+* Actual support for D-Bus (http://www.freedesktop.org/wiki/Software/dbus/) and SOME/IP (see http://some-ip.com/).
+* High performant implementation by using C++ templates (runtime-performance).
+* Highly configurable for the integration on different platforms (e.g. main-loop support, support of Franca deployment files).
+* Multithreading support (thread-safe).
+
+
+What is the top level understanding of Code generation and inernal IPC(DBUS) binding in CommonAPI C++?
+
+* CommonAPI C++ is strongly related to the interface description language Franca IDL. The basic procedure is that
+* you define an interface for your service with the platform- and programming-language-independent Franca IDL. 
+* Then you generate proxy- and stub-code with the CommonAPI code generator (CommonAPI-Tools). 
+* After that implement the stub functions by using the function bodies as they are generated and 
+* then implement the client by calling these functions by using the generated proxy. 
+* To get executable applications (client and service) generate IPC framework specific code (glue-code) with the binding specific code generator (at the moment there is one for D-Bus and for SOME/IP). 
+* At the end compile it together with the provided runtime libraries.
+
+-Application: 
+This term is used for executable programs on the target platform which can work as service and/or as client. 
+-Binding:
+A binding in the CommonAPI context is the software which adapts the CommonAPI standard API to IPC framework specific functionalities. The binding consists of a specific runtime library and a specific code generator.
+-Client:
+A client application uses the functionality of services by calling functions or subscribing to attributes. An application can be client and service at the same time.
+-Glue-code:
+CommonAPI applications are based on generated code. There is the generated code of CommonAPI itself and binding specific generated code. The latter is also called glue-code in the CommonAPI context.
+-IPC	
+Interprocess Communication 
+-Runtime
+All CommonAPI applications need a common, interface independent functionality for creating proxies, loading IPC specific libraries and so on. This functionality is provided by the CommonAPI runtime library.
+-Service
+A service offers a certain functionality which is accessible by interface functions.
+
+---------------------------
+DBUS Protocol
+---------------------------
+
+What is 'D-Bus' ?
+
+D-BUS is an interprocess communication (IPC) system, providing a simple yet powerful mechanism allowing applications to talk to one another, communicate information and request services. D-BUS was designed from scratch to fulfill the needs of a modern Linux system.
+
+What is the use of 'D-Bus' ?
+
+* D-BUS can perform basic application IPC, allowing one process to shuttle data to another.
+* D-BUS can facilitate sending events, or signals, through the system, allowing different components in the system to 
+  communicate and ultimately to integrate better. 
+  For example, a Bluetooth dæmon can send an incoming call signal that your music player can intercept, muting the volume until the call ends.
+* D-BUS implements a remote object system, letting one application request services and invoke methods from a different object.
+
+Why 'D-Bus' is Unique?
+
+* the basic unit of IPC in D-BUS is a message, not a byte stream. In this manner, D-BUS breaks up IPC into discrete messages, complete with 
+  headers (metadata) and a payload (the data). The message format is binary, typed, fully aligned and simple.
+* D-BUS is bus-based. The simplest form of communication is process to process. D-BUS, however, provides a dæmon, known as the message bus dæmon, 
+  that routes messages between processes on a specific bus. In this fashion, a bus topology is formed, allowing processes to speak to one or more 
+  applications at the same time. Applications can send to or listen for various events on the bus.
+* A final unique feature is the creation of not one but two of these buses, the system bus and the session bus. The system bus is global, system-wide 
+  and runs at the system level. All users of the system can communicate over this bus with the proper permissions, allowing the concept of system-wide
+  events. The session bus, however, is created during user login and runs at the user, or session, level. This bus is used solely by a particular user,
+  in a particular login session, as an IPC and remote object system for the user's applications.
+  
+What are the comcepts of D-BUS?
+
+* Messages are sent to objects. Objects are addressed using path names, such as /org/cups/printers/queue. Processes on the message bus are associated 
+  with objects and implemented interfaces on that object.
+* D-BUS supports multiple message types, such as signals, method calls, method returns and error messages. Signals are notification that a specific 
+  event has occurred. They are simple, asynchronous, one-way heads-up messages. Method call messages allow an application to request the invocation
+  of a method on a remote object. Method return messages provide the return value resulting from a method invocation. Error messages provide exceptions
+  in response to a method invocation.
+* D-BUS is fully typed and type-safe. Both a message's header and payload are fully typed. Valid types include byte, Boolean, 32-bit integer, 32-bit 
+  unsigned integer, 64-bit integer, 64-bit unsigned integer, double-precision floating point and string. A special array type allows for the grouping
+  of types. A DICT type allows for dictionary-style key/value pairs.
+* D-BUS is secure. It implements a simple protocol based on SASL profiles for authenticating one-to-one connections. On a bus-wide level, the reading 
+  of and the writing to messages from a specific interface are controlled by a security system. An administrator can control access to any interface 
+  on the bus. The D-BUS dæmon was written from the ground up with security in mind.
+
+Why D-BUS?
+
+These concepts make nice talk, but what is the benefit? First, the system-wide message bus is a new concept. A single bus shared by the entire system 
+allows for propagation of events, from the kernel (see The Kernel Event Layer sidebar) to the uppermost applications on the system. Linux, with its 
+well-defined interfaces and clear separation of layers, is not very integrated. D-BUS' system message bus improves integration without compromising
+fine engineering practices. Now, events such as disk full and printer queue empty or even battery power low can bubble up the system stack, available
+for whatever application cares, allowing the system to respond and react. The events are sent asynchronously, and without polling.
+
+
