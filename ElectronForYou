@@ -1,0 +1,5 @@
+I heared about "Electron" and found it quite useful if in case you want to convert any website to a Desktop Application. Here, i am using the commands and run those in Macbook.
+
+
+1. npm install nativefier -g
+2. nativefier --name "MyGChat" "https://mail.google.com/chat/u/0/#chat/home"
